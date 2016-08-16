@@ -1,0 +1,20 @@
+:80
+bind 0.0.0.0
+
+realip {
+  header X-Forwarded-For
+}
+
+hugo /site {
+  watch true
+}
+# the folder where Hugo generates the website
+root  public                             
+
+# protect the admin area using HTTP basic auth
+basicauth {$CADDY_AUTH_LOCATION}  {$CADDY_USER} {$CADDY_PASS}
+
+# enable the admin panel
+hugo                      
+
+log access.log
